@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-commerce Website</title>
+</head>
+<body>
+  <h1>E-commerce Website</h1>
+  <div id="product-details"></div>
+
+  <script>
+    // Function to fetch product details when a product is clicked
+    async function getProductDetails(productId) {
+      try {
+        const response = await fetch(`/products/${productId}`);
+        if (!response.ok) {
+          throw new Error('Product not found');
+        }
+        const product = await response.json();
+        // Display product details on the page
+        const productDetailsElement = document.getElementById('product-details');
+        productDetailsElement.innerHTML = `
+          <h2>${product.name}</h2>
+          <p><strong>Price:</strong> $${product.price}</p>
+          <p><strong>Description:</strong> ${product.description}</p>
+        `;
+      } catch (error) {
+        console.error(error.message);
+      }
+    }
+
+    // Simulate a user clicking on a product with ID 1
+    getProductDetails(1);
+  </script>
+</body>
+</html>
